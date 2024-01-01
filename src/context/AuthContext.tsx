@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { IContextType, IUser } from "../validation/types";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../appwrite/api";
+import GlobalSpinner from "../components/GlobalSpinner";
 
 export const INITIAL_USER = {
   id: "",
@@ -80,7 +81,7 @@ export const AuthContextProvider = ({
 
   return (
     <AuthUser.Provider value={values}>
-      {isLoading ? "Loading..." : children}
+      {isLoading ? <GlobalSpinner /> : children}
     </AuthUser.Provider>
   );
 };
