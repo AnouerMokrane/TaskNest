@@ -15,6 +15,7 @@ import PrivatePages from "./pages/PrivatePages";
 import { AuthContextProvider } from "./context/AuthContext";
 import QueryProvider from "./react-query/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ImportantTasks from "./pages/ImportantTasks";
 
 const RootLayout = () => {
   return (
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
         <Route path="/" element={<AllTasks />} />
         <Route path="/completed" element={<CopmetedTasks />} />
         <Route path="/incompleted" element={<IncompletedTasks />} />
+        <Route path="/important" element={<ImportantTasks />} />
       </Route>
 
       <Route element={<AuthLayout />}>

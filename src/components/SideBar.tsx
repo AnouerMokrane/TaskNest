@@ -1,4 +1,4 @@
-import { Check, Circle, Home, LogOut, User } from "lucide-react";
+import { AlertCircle, Check, Circle, Home, LogOut, User } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useLogout } from "../react-query/queriesAndMutations";
 import { INITIAL_USER, useAuthContext } from "../context/AuthContext";
@@ -60,6 +60,15 @@ const SideBar = () => {
           >
             <Circle width={20} />
             <span className="mt-1 hidden md:block">Incompleted</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className="nav-link flex gap-2 items-center w-full px-4 md:px-8 py-2 hover:bg-gray-600 hover:border-r-4 hover:border-green-600"
+            to={"/important"}
+          >
+            <AlertCircle width={20} />
+            <span className="mt-1 hidden md:block">important</span>
           </NavLink>
         </li>
       </ul>
