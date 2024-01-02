@@ -7,7 +7,6 @@ import {
 import { useState } from "react";
 import EditTaskForm from "./EditTaskForm";
 import toast from "react-hot-toast";
-import { updateTask } from "../appwrite/api";
 
 type taskProps = {
   task: Models.Document;
