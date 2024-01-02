@@ -1,9 +1,13 @@
 import { Models } from "appwrite";
 import { Edit, Loader, Trash } from "lucide-react";
-import { useDeleteTask } from "../react-query/queriesAndMutations";
+import {
+  useDeleteTask,
+  useUpdateTask,
+} from "../react-query/queriesAndMutations";
 import { useState } from "react";
 import EditTaskForm from "./EditTaskForm";
 import toast from "react-hot-toast";
+import { updateTask } from "../appwrite/api";
 
 type taskProps = {
   task: Models.Document;
@@ -11,8 +15,8 @@ type taskProps = {
 
 const TaskCard = ({ task }: taskProps) => {
   const { mutateAsync: deleteTask, isPending } = useDeleteTask();
+  const { mutateAsync: toggleCompleted, isPending: toggling } = useUpdateTask();
   const [openModel, setOpenModel] = useState(false);
-
   const { taskTiltle: title, taskText: description, date, completed } = task;
 
   const handleDelete = async () => {
@@ -24,6 +28,23 @@ const TaskCard = ({ task }: taskProps) => {
       toast.error("Delete task failed");
     }
   };
+  const handleCompletedState = async () => {
+    try {
+      await toggleCompleted({
+        taskId: task.$id,
+        data: {
+          title: task.taskTiltle,
+          description: task.description,
+          date: task.date,
+          important: task.important,
+          completed: !task.completed,
+        },
+      });
+    } catch (error) {
+      console.error("Error toggling completed state:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between gap-6 bg-[#333233] rounded-lg p-4">
       <div>
@@ -34,9 +55,10 @@ const TaskCard = ({ task }: taskProps) => {
         <span className=" text-sm">{date}</span>
         <div className="flex justify-between items-center mt-2">
           <button
-            className={` ${
+            onClick={handleCompletedState}
+            className={` ${toggling && "opacity-50"} ${
               completed ? "bg-green-600" : "bg-red-500"
-            } py-2 px-4 rounded-full`}
+            } py-2 px-4 rounded-full `}
           >
             {completed ? "Completed" : "Incompleted"}
           </button>
